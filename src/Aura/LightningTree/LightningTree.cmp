@@ -1,0 +1,87 @@
+
+
+<aura:component controller="LightningTreeAuraController">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="items" type="Object" />
+	<aura:attribute name="task" type="Object" />
+	<aura:attribute name="isOpen" type="boolean" default="false" />
+	<div class="slds-notify slds-notify--alert slds-theme--success slds-theme--alert-texture" role="alert">
+		<span class="slds-assistive-text">Success</span>
+		<h2>
+			<span aria-hidden="true" class="slds-button__icon">
+			<img src="/resource/SLDS080/assets/icons/utility/connected_apps.svg" alt="Placeholder" style="max-width: 25px;"/>
+			</span>
+			Lightning Tree Component Example by Pritam Shekhawat
+		</h2>
+	</div>
+	<div class="slds-p-horizontal--small slds-size--1-of-1 slds-m-top--large"></div>
+	<!--Lightning Tree-->
+	<div class="slds-m-around_xx-large">
+		<Center>
+			<h3 class="slds-notify slds-notify--alert slds-theme--INFORMATIONAL slds-theme--alert-texture">Lead With Activity Information</h3>
+		</Center>
+		<lightning:tree items="{!v.items}" onselect="{!c.openModel}" />
+	</div>
+	<!--Lightning Spinner-->
+	<div>
+		<lightning:spinner alternativeText="Work In Progress.. Wait !!" title="Processing.." aura:id="spnr" variant="brand" size="large" />
+	</div>
+	<div class="slds-m-around--xx-large">
+		<!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->
+		<aura:if isTrue="{!v.isOpen}">
+			<aura:if isTrue="{!(v.task != null)}">
+				<!-- Activity Information MODAL-->
+				<div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+					<div class="slds-modal__container">
+						<div class="slds-modal__header">
+							<button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+							X
+							<span class="slds-assistive-text">Close</span>
+							</button>
+							<h2 id="header99" class="slds-text-heading--medium">Activity Information</h2>
+						</div>
+						<div class="slds-modal__content slds-p-around--medium">
+							<div class="slds-form-element">
+								<label class="slds-form-element__label" for="input-id-01"><b>Subject</b></label>
+								<div class="slds-form-element__control">
+									<lightning:formattedText value="{!v.task.Subject}" />
+								</div>
+							</div>
+							<div class="slds-form-element">
+								<label class="slds-form-element__label" for="input-id-01"><b>Status</b></label>
+								<div class="slds-form-element__control">
+									<lightning:formattedText value="{!v.task.Status}" />
+								</div>
+							</div>
+							<div class="slds-form-element">
+								<label class="slds-form-element__label" for="input-id-01"><b>Description</b></label>
+								<div class="slds-form-element__control">
+									<lightning:formattedText value="{!v.task.Description}" />
+								</div>
+							</div>
+							<div class="slds-form-element">
+								<label class="slds-form-element__label" for="input-id-01"><b>Assigned To</b></label>
+								<div class="slds-form-element__control">
+									<lightning:formattedText value="{!v.task.Owner.Name}" />
+								</div>
+							</div>
+							<div class="slds-form-element">
+								<label class="slds-form-element__label" for="input-id-01"><b>Due Date</b></label>
+								<div class="slds-form-element__control">
+									<lightning:formattedDateTime value="{!v.task.ActivityDate}" />
+								</div>
+							</div>
+						</div>
+						<div class="slds-modal__footer">
+							<button class="slds-button slds-button--neutral" onclick="{!c.closeModel}">Cancel</button>
+							<button class="slds-button slds-button--brand" onclick="{!c.closeModel}">Close</button>
+						</div>
+					</div>
+				</div>
+				<div class="slds-backdrop slds-backdrop--open"></div>
+				<!-- MODAL END Here -->
+			</aura:if>
+		</aura:if>
+	</div>
+</aura:component>
+
